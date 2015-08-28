@@ -1,0 +1,28 @@
+{
+  "name": "jef",
+  "version": "1.0.0",
+  "authors": [
+    "eyaka"
+  ],
+  "description": "HTML/CSS/JS kick starter by eyaka",
+  "main": "jef.js",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "keywords": [
+    "kickStarter",
+    "HTML",
+    "CSS",
+    "Javascript"
+  ],
+  "license": "CC-BY",
+  "homepage": "eyaka.be",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
