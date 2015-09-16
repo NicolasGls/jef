@@ -216,6 +216,9 @@ var JEF = (function () {
                 }
                 i++;
             }
+
+            // we recovery all behaviors
+            behaviors();
         }
     }, {
         key: 'getViewportSize',

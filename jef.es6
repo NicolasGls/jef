@@ -188,12 +188,6 @@ class JEF {
                     break;
             }
         }
-
-
-
-
-
-
     }
 
     init() {
@@ -224,6 +218,9 @@ class JEF {
             }
             i++;
         }
+
+        // we recovery all behaviors
+        behaviors();
     }
 
     getViewportSize() {
