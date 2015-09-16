@@ -28,7 +28,7 @@ class JEF {
             }
         };
 
-        behaviors();
+        this.behaviors();
 
     }
 
@@ -220,7 +220,7 @@ class JEF {
         }
 
         // we recovery all behaviors
-        behaviors();
+        this.behaviors();
     }
 
     getViewportSize() {

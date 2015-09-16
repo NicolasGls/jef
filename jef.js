@@ -25,7 +25,7 @@ var JEF = (function () {
             }
         };
 
-        behaviors();
+        this.behaviors();
     }
 
     _createClass(JEF, [{
@@ -218,7 +218,7 @@ var JEF = (function () {
             }
 
             // we recovery all behaviors
-            behaviors();
+            this.behaviors();
         }
     }, {
         key: 'getViewportSize',
