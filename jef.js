@@ -18,11 +18,63 @@ var JEF = (function () {
         // expose for API
         window.__JEF__ = {
             view: viewSelector,
-            instance: this
+            instance: this,
+            element: {
+                target: '',
+                url: ''
+            }
         };
+
+        behaviors();
     }
 
     _createClass(JEF, [{
+        key: 'behaviors',
+        value: function behaviors() {
+
+            // jQuery behaviors
+            if (window.jQuery) {
+                $(document).ready(function () {
+                    var $slider = $('[data-slider]');
+
+                    if ($slider.length > 0) {
+                        var infiniteLoop, mode, easing, fullHeight, hidecontrolonend, video, responsive, touchenabled, pager, controls, nexttext, prevtext, autocontrols, autohover;
+
+                        $(window).resize(function () {
+                            $('[data-fullHeight]').find('.slider__item').height(document.documentElement.clientHeight + 'px');
+                        });
+
+                        $('[data-slider]').each(function () {
+                            infiniteLoop = $(this).attr('data-infiniteLoop') !== '' ? $(this).attr('data-infiniteLoop') : true;
+                            mode = $(this).attr('data-mode') !== '' ? $(this).attr('data-mode') : 'horizontal';
+                            easing = $(this).attr('data-easing') !== '' ? $(this).attr('data-easing') : 'ease-out';
+                            fullHeight = $(this).attr('data-fullheight') !== '' ? $(this).attr('data-fullheight') : 0;
+                            hidecontrolonend = $(this).attr('data-hidecontrolonend') !== '' ? $(this).attr('data-hidecontrolonend') : false;
+                            video = $(this).attr('data-video') !== '' ? $(this).attr('data-video') : false;
+                            responsive = $(this).attr('data-responsive') !== '' ? $(this).attr('data-responsive') : true;
+                            touchenabled = $(this).attr('data-touchenabled') !== '' ? $(this).attr('data-touchenabled') : true;
+                            pager = $(this).attr('data-pager') !== '' ? $(this).attr('data-pager') : true;
+                            controls = $(this).attr('data-controls') !== '' ? $(this).attr('data-controls') : true;
+                            nexttext = $(this).attr('data-nexttext') !== '' ? $(this).attr('data-nexttext') : 'Next';
+                            prevtext = $(this).attr('data-prevtext') !== '' ? $(this).attr('data-prevtext') : 'Prev';
+                            autocontrols = $(this).attr('data-autocontrols') !== '' ? $(this).attr('data-autocontrols') : false;
+                            autohover = $(this).attr('data-autohover') !== '' ? $(this).attr('data-autohover') : 0;
+
+                            if (fullHeight) {
+                                $(this).find('.slider__item').height(document.documentElement.clientHeight + 'px');
+                            }
+
+                            $(this).bxSlider({
+                                mode: mode,
+                                infiniteLoop: infiniteLoop,
+                                easing: easing
+                            });
+                        });
+                    }
+                });
+            }
+        }
+    }, {
         key: 'addExtension',
         value: function addExtension(extension) {
 
@@ -32,9 +84,13 @@ var JEF = (function () {
 
             // If the extension does not exist in the current instance of JEF,
             // it is added
-            if (!this.extensions.hasOwnProperty(extension)) {
-                this.extensions[extension] = window[functionName];
-                this[extension] = window[functionName];
+            if (window[functionName]) {
+                if (!this.extensions.hasOwnProperty(extension)) {
+                    this.extensions[extension] = window[functionName];
+                    this[extension] = window[functionName];
+                }
+            } else {
+                console.log('[Jef] This extension does not exist.');
             }
         }
     }, {
@@ -105,6 +161,28 @@ var JEF = (function () {
                     } catch (e) {
                         console.log('[Jef] You probably have two controllers of the same name:\n' + e);
                     }
+                }
+            }
+        }
+    }, {
+        key: 'config',
+        value: function config(params) {
+
+            var extension = undefined,
+                param = undefined;
+
+            console.log(this.extensions);
+
+            for (param in Object.keys(params)) {
+                param = Object.keys(params)[param];
+                switch (param) {
+                    case 'jquery':
+                        for (extension in this.extensions) {
+                            if (this.extensions.hasOwnProperty(extension) && this.extensions[extension].settings.expose) {
+                                this.extensions[extension].settings.expose();
+                            }
+                        }
+                        break;
                 }
             }
         }
